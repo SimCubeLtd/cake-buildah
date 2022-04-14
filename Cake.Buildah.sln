@@ -8,7 +8,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		build.cake = build.cake
 		Directory.Build.props = Directory.Build.props
 		LICENSE = LICENSE
 		README.md = README.md
@@ -22,6 +21,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Buildah", "src\Cake.Buildah\Cake.Buildah.csproj", "{D42953F3-A075-434E-8AEA-0B3A76C5D162}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Buildah.Tests", "tests\Cake.Buildah.Tests\Cake.Buildah.Tests.csproj", "{D2F55046-F530-4170-A687-0D415D7281B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{449F9620-38BD-4278-AD27-6582EEF3A18D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\master.yml = .github\workflows\master.yml
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,5 +52,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D42953F3-A075-434E-8AEA-0B3A76C5D162} = {F17B1FA8-2860-40C7-BD34-8A5D7FE7A6E4}
 		{D2F55046-F530-4170-A687-0D415D7281B7} = {71A2F431-D29B-4ADA-934F-4319421426BC}
+		{449F9620-38BD-4278-AD27-6582EEF3A18D} = {73141119-9964-4C31-9406-A24AAF6AB92F}
 	EndGlobalSection
 EndGlobal
