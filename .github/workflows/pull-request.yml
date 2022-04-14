@@ -8,7 +8,7 @@ env:
   SIMCUBE_SONARQUBE_PROJECT_KEY: "CakeBuildah"
   SIMCUBE_SOLUTION_FILE_PATH: "Cake.Buildah.sln"
   SIMCUBE_BUILD_NAME: "Cake.Buildah"
-  SIMCUBE_DOTNET_TOOL_PATH: ${{ ~/tools }}
+  SIMCUBE_DOTNET_TOOL_PATH: "/home/runner/.dotnet/tools"
   SIMCUBE_SOLUTION_ROOT: ${{ github.workspace }}
   SIMCUBE_MANUAL_VERSION: 0.0.${{ github.run_number }}.0
   SIMCUBE_MANUAL_BRANCH_NAME: ${{ github.ref_name }}
@@ -37,8 +37,8 @@ jobs:
 
       - name: "Install Required"
         run: |
-          dotnet tool install SimCube.BuildTool --tool-path ${SIMCUBE_DOTNET_TOOL_PATH}
-          dotnet tool install dotnet-sonarscanner --tool-path ${SIMCUBE_DOTNET_TOOL_PATH}
+          dotnet tool install -g SimCube.BuildTool
+          dotnet tool install -g dotnet-sonarscanner
 
       - uses: SimCubeLtd/buildtool-action@main
         continue-on-error: false
