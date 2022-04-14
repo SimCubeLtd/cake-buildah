@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>Cake.Buildah</AssemblyName>
+    <RootNamespace>Cake.Buildah</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageId>Cake.Buildah</PackageId>
+    <Authors>David Sekula</Authors>
+    <Company>SimCube Ltd</Company>
+    <Description>Cake Build addin for Buildah.</Description>
+    <PackageProjectUrl>https://github.com/SimCubeLtd/Cake.Buildah</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>cake;build;buildah;cake-build;cake-addin;cake-contrib</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageReleaseNotes>See https://github.com/SimCubeLtd/Cake.Buildah/blob/master/ReleaseNotes.md</PackageReleaseNotes>
+    <Version>0.0.1</Version>
+    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/addin/cake-contrib-addin-medium.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Ps\**" />
+    <EmbeddedResource Remove="Ps\**" />
+    <None Remove="Ps\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Cake.Core" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{73141119-9964-4C31-9406-A24AAF6AB92F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		build.cake = build.cake
+		Directory.Build.props = Directory.Build.props
+		LICENSE = LICENSE
+		README.md = README.md
+		ReleaseNotes.md = ReleaseNotes.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F17B1FA8-2860-40C7-BD34-8A5D7FE7A6E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{71A2F431-D29B-4ADA-934F-4319421426BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Buildah", "src\Cake.Buildah\Cake.Buildah.csproj", "{D42953F3-A075-434E-8AEA-0B3A76C5D162}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Buildah.Tests", "tests\Cake.Buildah.Tests\Cake.Buildah.Tests.csproj", "{D2F55046-F530-4170-A687-0D415D7281B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D42953F3-A075-434E-8AEA-0B3A76C5D162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D42953F3-A075-434E-8AEA-0B3A76C5D162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D42953F3-A075-434E-8AEA-0B3A76C5D162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D42953F3-A075-434E-8AEA-0B3A76C5D162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F55046-F530-4170-A687-0D415D7281B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F55046-F530-4170-A687-0D415D7281B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F55046-F530-4170-A687-0D415D7281B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F55046-F530-4170-A687-0D415D7281B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3635D89F-3373-4509-B5C7-7D6BD0BCE693}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D42953F3-A075-434E-8AEA-0B3A76C5D162} = {F17B1FA8-2860-40C7-BD34-8A5D7FE7A6E4}
+		{D2F55046-F530-4170-A687-0D415D7281B7} = {71A2F431-D29B-4ADA-934F-4319421426BC}
+	EndGlobalSection
+EndGlobal
