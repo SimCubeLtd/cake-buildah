@@ -27,18 +27,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: '6.0.x'
-
-      - name: "Install Required"
-        run: |
-          dotnet tool install -g SimCube.BuildTool
-          dotnet tool install -g dotnet-sonarscanner
-
-      - uses: SimCubeLtd/buildtool-action@main
-        continue-on-error: false
+    - uses: SimCubeLtd/buildtool-action@prom3theu5-patch-1
+      with:
+        installRequired: 'true'
+        checkout: 'true'
+        setupDotNet: 'true'
