@@ -8,28 +8,26 @@ namespace Cake.Buildah.Tests.Registry.Login;
 
 public class BuildahRegistryLoginFixture : ToolFixture<BuildahRegistryLoginSettings>, ICakeContext
 {
+    public BuildahRegistryLoginFixture()
+        : base("Buildah") => ProcessRunner.Process.SetStandardOutput(new string[] { });
+
     public string Path { get; set; } = null!;
 
     IFileSystem ICakeContext.FileSystem => FileSystem;
 
     ICakeEnvironment ICakeContext.Environment => Environment;
 
-    public ICakeLog Log => Log;
+    public ICakeLog Log => new NullLog();
 
     ICakeArguments ICakeContext.Arguments => throw new NotImplementedException();
 
     IProcessRunner ICakeContext.ProcessRunner => ProcessRunner;
 
-    public IRegistry Registry => Registry;
+    public IRegistry Registry => throw new NotImplementedException();
 
     public ICakeDataResolver Data => throw new NotImplementedException();
 
     ICakeConfiguration ICakeContext.Configuration => throw new NotImplementedException();
 
-    public BuildahRegistryLoginFixture(): base("Buildah") => ProcessRunner.Process.SetStandardOutput(new string[] { });
-
-    protected override void RunTool()
-    {
-        this.BuildahLogin(Settings, Path);
-    }
+    protected override void RunTool() => this.BuildahLogin(Settings, Path);
 }

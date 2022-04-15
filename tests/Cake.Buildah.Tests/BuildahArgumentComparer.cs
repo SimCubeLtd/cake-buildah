@@ -10,6 +10,7 @@ public class BuildahArgumentComparer : IComparer
         {
             throw new ArgumentException(nameof(x));
         }
+
         if (y is not BuildahArgument(var s, var value1, var buildahArgumentQuoting))
         {
             throw new ArgumentNullException(nameof(y));
@@ -20,13 +21,14 @@ public class BuildahArgumentComparer : IComparer
         {
             return keyCompare;
         }
+
         var valueCompare = CompareStrings(value, value1);
         if (valueCompare != 0)
         {
             return valueCompare;
         }
-        return quoting.CompareTo(buildahArgumentQuoting);
 
+        return quoting.CompareTo(buildahArgumentQuoting);
     }
 
     private static int CompareStrings(string? a, string? b)
@@ -35,14 +37,17 @@ public class BuildahArgumentComparer : IComparer
         {
             return 0;
         }
+
         if (a == null)
         {
             return 1;
         }
+
         if (b == null)
         {
             return -1;
         }
+
         return string.Compare(a, b, StringComparison.Ordinal);
     }
 }

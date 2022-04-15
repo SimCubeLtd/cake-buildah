@@ -10,22 +10,25 @@ public class BuildahBuildTest
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new(),
-            Path = "path"
+            Settings = new BuildahImageBuildSettings(),
+            Path = "path",
         };
 
         var actual = fixture.Run();
 
         Assert.That(actual.Args, Is.EqualTo("bud \"path\""));
     }
+
     [Test]
     public void WhenRmFlagIsSet_CommandLineIsCorrect()
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new()
-                {  Rm = true },
-            Path = "path"
+            Settings = new BuildahImageBuildSettings
+        {
+            Rm = true,
+        },
+            Path = "path",
         };
 
         var actual = fixture.Run();
@@ -38,9 +41,11 @@ public class BuildahBuildTest
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new()
-                { Rm = false },
-            Path = "path"
+            Settings = new BuildahImageBuildSettings
+            {
+                Rm = false,
+            },
+            Path = "path",
         };
 
         var actual = fixture.Run();
@@ -53,9 +58,10 @@ public class BuildahBuildTest
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new()
-                { ForceRm = false },
-            Path = "path"
+            Settings = new BuildahImageBuildSettings
+            {
+                ForceRm = false,
+            }, Path = "path",
         };
 
         var actual = fixture.Run();
@@ -68,9 +74,10 @@ public class BuildahBuildTest
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new()
-                { Pull = false },
-            Path = "path"
+            Settings = new BuildahImageBuildSettings
+            {
+                Pull = false,
+            }, Path = "path",
         };
 
         var actual = fixture.Run();
@@ -83,41 +90,45 @@ public class BuildahBuildTest
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new()
-                { Pull = true },
-            Path = "path"
+            Settings = new BuildahImageBuildSettings
+            {
+                Pull = true,
+            }, Path = "path",
         };
 
         var actual = fixture.Run();
 
         Assert.That(actual.Args, Is.EqualTo("bud --pull \"path\""));
     }
+
     [Test]
     public void WhenPathHasSpaces_ArgumentIsQuoted()
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new(),
-            Path = @"C:\Some where"
+            Settings = new BuildahImageBuildSettings(),
+            Path = @"C:\Some where",
         };
 
         var actual = fixture.Run();
 
         Assert.That(actual.Args, Is.EqualTo(@"bud ""C:\Some where"""));
     }
+
     [Test]
     public void WhenPathHasSingleQuote_ArgumentIsQuoted()
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new(),
-            Path = "\""
+            Settings = new BuildahImageBuildSettings(),
+            Path = "\"",
         };
 
         var actual = fixture.Run();
 
         Assert.That(actual.Args, Is.EqualTo(@"bud """""""));
     }
+
     [TestCase("\"test\"")]
     [TestCase(" \"test\"")]
     [TestCase("\"test\" ")]
@@ -126,8 +137,8 @@ public class BuildahBuildTest
     {
         var fixture = new BuildahBuildFixture
         {
-            Settings = new(),
-            Path = path
+            Settings = new BuildahImageBuildSettings(),
+            Path = path,
         };
 
         var actual = fixture.Run();

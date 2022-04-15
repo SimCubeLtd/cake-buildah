@@ -11,33 +11,43 @@ public class BuildahLoginTest
     {
         var fixture = new BuildahRegistryLoginFixture
         {
-            Settings = new(),
-            Path = "path"
+            Settings = new BuildahRegistryLoginSettings(),
+            Path = "path",
         };
 
         var actual = fixture.Run();
 
         Assert.That(actual.Args, Is.EqualTo("login path"));
     }
+
     [Test]
     public void WhenOnlyUsernameIsSet_CommandLineIsCorrect()
     {
         var fixture = new BuildahRegistryLoginFixture
         {
-            Settings = new()
-                { Username = "Tubo" },
-            Path = "path"
+            Settings = new BuildahRegistryLoginSettings
+            {
+                Username = "Tubo",
+            },
+            Path = "path",
         };
 
         var actual = fixture.Run();
 
         Assert.That(actual.Args, Is.EqualTo("login --username \"Tubo\" path"));
     }
+
     [Test]
     public void WhenOnlyPasswordIsSet_ArgumentIsRedacted()
     {
         var builder = new ProcessArgumentBuilder();
-        builder.AppendAll("login", new BuildahRegistryLoginSettings { Password = "Tubo" }, Array.Empty<string>());
+        builder.AppendAll(
+            "login",
+            new BuildahRegistryLoginSettings
+            {
+                Password = "Tubo",
+            },
+            Array.Empty<string>());
 
         var actual = builder.RenderSafe();
 

@@ -7,24 +7,37 @@ namespace Cake.Buildah.Tests;
 public class ArgumentsBuilderExtensionTest
 {
     public static PropertyInfo? StringProperty => GetProperty(nameof(TestSettings.String));
+
     public static PropertyInfo? PasswordProperty => GetProperty(nameof(TestSettings.Password));
+
     public static PropertyInfo? StringsProperty => GetProperty(nameof(TestSettings.Strings));
+
     public static PropertyInfo? ListStringsProperty => GetProperty(nameof(TestSettings.ListStrings));
+
     public static PropertyInfo? NullableIntProperty => GetProperty(nameof(TestSettings.NullableInt));
+
     public static PropertyInfo? NullableInt64Property => GetProperty(nameof(TestSettings.NullableInt64));
+
     public static PropertyInfo? NullableUInt64Property => GetProperty(nameof(TestSettings.NullableUInt64));
+
     public static PropertyInfo? NullableUInt16Property => GetProperty(nameof(TestSettings.NullableUInt16));
+
     public static PropertyInfo? NullableBoolProperty => GetProperty(nameof(TestSettings.NullableBool));
+
     public static PropertyInfo? NullableTimeSpanProperty => GetProperty(nameof(TestSettings.NullableTimeSpan));
+
     public static PropertyInfo? BoolProperty => GetProperty(nameof(TestSettings.Bool));
+
     public static PropertyInfo? DecoratedStringProperty => GetProperty(nameof(TestSettings.DecoratedString));
+
     public static PropertyInfo? DecoratedBoolProperty => GetProperty(nameof(TestSettings.DecoratedBool));
+
     public static PropertyInfo? DecoratedStringsProperty => GetProperty(nameof(TestSettings.DecoratedStrings));
+
     public static PropertyInfo? PreCommandValueProperty => GetProperty(nameof(TestSettings.PreCommandValue));
-    public static PropertyInfo? GetProperty(string name)
-    {
-        return typeof(TestSettings).GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
-    }
+
+    public static PropertyInfo? GetProperty(string name) => typeof(TestSettings).GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+
     [TestFixture]
     public class GetArgumentFromBoolProperty
     {
@@ -35,6 +48,7 @@ public class ArgumentsBuilderExtensionTest
 
             Assert.That(actual, Is.EqualTo("--bool"));
         }
+
         [Test]
         public void WhenFalse_NullIsReturned()
         {
@@ -43,59 +57,79 @@ public class ArgumentsBuilderExtensionTest
             Assert.That(actual, Is.Null);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromStringProperty
     {
         [Test]
         public void WhenGivenStringProperty_FormatsProperly()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo", isSecret: false)!.Value;
+            var actual =
+                ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo", false)!.Value;
 
             Assert.That(actual.Key, Is.EqualTo("--string"));
             Assert.That(actual.Value, Is.EqualTo("tubo"));
             Assert.That(actual.Quoting, Is.EqualTo(BuildahArgumentQuoting.Quoted));
         }
+
         [Test]
         public void WhenGivenNull_NullIsReturned()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, null, isSecret: false);
+            var actual = ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, null, false);
 
             Assert.That(actual, Is.Null);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromPasswordProperty
     {
         [Test]
         public void WhenGivenStringProperty_FormatsProperly()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo", isSecret: true)!.Value;
+            var actual =
+                ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo", true)!.Value;
 
             Assert.That(actual.Key, Is.EqualTo("--string"));
             Assert.That(actual.Value, Is.EqualTo("tubo"));
             Assert.That(actual.Quoting, Is.EqualTo(BuildahArgumentQuoting.QuotedSecret));
         }
     }
+
     [TestFixture]
     public class GetArgumentFromStringArrayProperty
     {
         [Test]
         public void WhenGivenStringArrayProperty_FormatsProperly()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(StringsProperty, new string?[] { "tubo1", "tubo2" }, isSecret: false);
+            var actual = ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(
+                StringsProperty,
+                new[]
+                {
+                    "tubo1",
+                    "tubo2",
+                },
+                false);
 
-            CollectionAssert.AreEqual(actual, new BuildahArgument[] {
-                new("--strings", "tubo1", BuildahArgumentQuoting.Quoted),
-                new("--strings", "tubo2", BuildahArgumentQuoting.Quoted)});
+            CollectionAssert.AreEqual(
+                actual,
+                new BuildahArgument[]
+                {
+                    new("--strings", "tubo1", BuildahArgumentQuoting.Quoted),
+                    new("--strings", "tubo2", BuildahArgumentQuoting.Quoted),
+                });
         }
+
         [Test]
         public void WhenGivenNull_EmptyArrayReturned()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(StringsProperty, null, isSecret: false);
+            var actual =
+                ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(StringsProperty, null, false);
 
             Assert.That(actual, Is.Empty);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromStringArrayListProperty
     {
@@ -103,20 +137,32 @@ public class ArgumentsBuilderExtensionTest
         public void WhenGivenStringArrayProperty_FormatsProperly()
         {
             var actual = ArgumentsBuilderExtension.GetArgumentFromStringArrayListProperty(
-                ListStringsProperty, new string[] { "tubo1", "tubo2" }, isSecret: false)!.Value;
+                ListStringsProperty,
+                new[]
+                {
+                    "tubo1",
+                    "tubo2",
+                },
+                false)!.Value;
 
             Assert.That(actual.Key, Is.EqualTo("--list-strings"));
             Assert.That(actual.Value, Is.EqualTo("tubo1,tubo2"));
             Assert.That(actual.Quoting, Is.EqualTo(BuildahArgumentQuoting.Quoted));
         }
+
         [Test]
         public void WhenGivenNull_EmptyArrayReturned()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(ListStringsProperty, null, isSecret: false);
+            var actual =
+                ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(
+                    ListStringsProperty,
+                    null,
+                    false);
 
             Assert.That(actual, Is.Empty);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromDictionaryProperty
     {
@@ -124,22 +170,33 @@ public class ArgumentsBuilderExtensionTest
         public void WhenGivenStringArrayProperty_FormatsProperly()
         {
             var actual = ArgumentsBuilderExtension.GetArgumentFromDictionaryProperty(
-                StringsProperty, new()
-                    { { "t1", "v1" }, { "t2", "v2" } }, isSecret: false);
+                StringsProperty,
+                new Dictionary<string, string>
+                {
+                    { "t1", "v1" },
+                    { "t2", "v2" },
+                },
+                false);
 
-            CollectionAssert.AreEqual(actual, new BuildahArgument[] {
-                new("--strings", "t1=v1", BuildahArgumentQuoting.Quoted),
-                new("--strings","t2=v2", BuildahArgumentQuoting.Quoted),
-            });
+            CollectionAssert.AreEqual(
+                actual,
+                new BuildahArgument[]
+                {
+                    new("--strings", "t1=v1", BuildahArgumentQuoting.Quoted),
+                    new("--strings", "t2=v2", BuildahArgumentQuoting.Quoted),
+                });
         }
+
         [Test]
         public void WhenGivenNull_EmptyArrayReturned()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromDictionaryProperty(StringsProperty, null, isSecret: false);
+            var actual =
+                ArgumentsBuilderExtension.GetArgumentFromDictionaryProperty(StringsProperty, null, false);
 
             Assert.That(actual, Is.Empty);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromNullableIntProperty
     {
@@ -159,6 +216,7 @@ public class ArgumentsBuilderExtensionTest
             Assert.That(actual, Is.Null);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromNullableInt64Property
     {
@@ -178,6 +236,7 @@ public class ArgumentsBuilderExtensionTest
             Assert.That(actual, Is.Null);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromNullableUInt64Property
     {
@@ -197,6 +256,7 @@ public class ArgumentsBuilderExtensionTest
             Assert.That(actual, Is.Null);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromNullableUInt16Property
     {
@@ -216,6 +276,7 @@ public class ArgumentsBuilderExtensionTest
             Assert.That(actual, Is.Null);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromNullableBoolProperty
     {
@@ -243,13 +304,17 @@ public class ArgumentsBuilderExtensionTest
             Assert.That(actual, Is.Null);
         }
     }
+
     [TestFixture]
     public class GetArgumentFromNullableTimeSpanProperty
     {
         [Test]
         public void WhenGivenValue_FormatsProperly()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromNullableTimeSpanProperty(NullableTimeSpanProperty, new TimeSpan(734, 18, 4));
+            var actual =
+                ArgumentsBuilderExtension.GetArgumentFromNullableTimeSpanProperty(
+                    NullableTimeSpanProperty,
+                    new TimeSpan(734, 18, 4));
 
             Assert.That(actual, Is.EqualTo("--nullable-time-span 734h18m4s"));
         }
@@ -257,7 +322,8 @@ public class ArgumentsBuilderExtensionTest
         [Test]
         public void WhenGivenNull_NullIsReturned()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromNullableTimeSpanProperty(NullableTimeSpanProperty, null);
+            var actual =
+                ArgumentsBuilderExtension.GetArgumentFromNullableTimeSpanProperty(NullableTimeSpanProperty, null);
 
             Assert.That(actual, Is.Null);
         }
@@ -268,10 +334,7 @@ public class ArgumentsBuilderExtensionTest
     {
         [TestCase("Name", ExpectedResult = "name")]
         [TestCase("NameExtended", ExpectedResult = "name-extended")]
-        public string? WhenInput_ReturnsCorrectlyFormatted(string name)
-        {
-            return ArgumentsBuilderExtension.GetPropertyName(name);
-        }
+        public string? WhenInput_ReturnsCorrectlyFormatted(string name) => ArgumentsBuilderExtension.GetPropertyName(name);
     }
 
     [TestFixture]
@@ -280,15 +343,23 @@ public class ArgumentsBuilderExtensionTest
         [Test]
         public void WhenStringInput_AddsAsArgument()
         {
-            TestSettings? input = new TestSettings { String = "tubo" };
+            var input = new TestSettings
+            {
+                String = "tubo",
+            };
 
-            ProcessArgumentBuilder builder = new ProcessArgumentBuilder();
-            builder.AppendAll("cmd", input, new string[] { "arg1" });
+            var builder = new ProcessArgumentBuilder();
+            builder.AppendAll(
+                "cmd",
+                input,
+                new[]
+                {
+                    "arg1",
+                });
             var actual = builder.Render();
 
             Assert.That(actual, Is.EqualTo("cmd --string \"tubo\" arg1"));
         }
-
     }
 
     [TestFixture]
@@ -302,105 +373,4 @@ public class ArgumentsBuilderExtensionTest
             Assert.That(actual, Is.EqualTo("734h18m4s"));
         }
     }
-}
-
-[TestFixture]
-public class GetAutoPropertyAttributeOrNull: ArgumentsBuilderExtensionTest
-{
-    [Test]
-    public void WhenDecorated_ReturnsAutoPropertyAttribute()
-    {
-        var actual = ArgumentsBuilderExtension.GetAutoPropertyAttributeOrNull(DecoratedStringProperty);
-
-        Assert.That(actual?.Format, Is.EqualTo("-s {1}"));
-    }
-    [Test]
-    public void WhenNotDecorated_ReturnsNull()
-    {
-        var actual = ArgumentsBuilderExtension.GetAutoPropertyAttributeOrNull(StringProperty);
-
-        Assert.That(actual, Is.Null);
-    }
-}
-
-[TestFixture]
-public class GetArgumentFromAutoProperty: ArgumentsBuilderExtensionTest
-{
-    [Test]
-    public void WhenGivenValue_FormatsProperly()
-    {
-        var attribute = ArgumentsBuilderExtension.GetAutoPropertyAttributeOrNull(DecoratedStringProperty);
-        var actual = ArgumentsBuilderExtension.GetArgumentFromAutoProperty(attribute, DecoratedStringProperty, "SIGNAL");
-
-        Assert.That(actual, Is.EqualTo("-s SIGNAL"));
-    }
-    [Test]
-    public void WhenOnlyWhenTrueValue_AndIsFalse_ReturnsEmptyString()
-    {
-        var attribute = ArgumentsBuilderExtension.GetAutoPropertyAttributeOrNull(DecoratedBoolProperty);
-        var actual = ArgumentsBuilderExtension.GetArgumentFromAutoProperty(attribute, DecoratedBoolProperty, false);
-
-        Assert.That(actual, Is.Empty);
-    }
-    [Test]
-    public void WhenOnlyWhenTrueValue_AndIsTrue_FormatsProperly()
-    {
-        var attribute = ArgumentsBuilderExtension.GetAutoPropertyAttributeOrNull(DecoratedBoolProperty);
-        var actual = ArgumentsBuilderExtension.GetArgumentFromAutoProperty(attribute, DecoratedBoolProperty, true);
-
-        Assert.That(actual, Is.EqualTo("-v"));
-    }
-    [Test]
-    public void WhenDecoratedStrings_FormatsProperly()
-    {
-        var attribute = ArgumentsBuilderExtension.GetAutoPropertyAttributeOrNull(DecoratedStringsProperty);
-        var actual = ArgumentsBuilderExtension.GetArgumentFromAutoProperty(attribute, DecoratedStringsProperty, new string[] {"One=1", "Two=2" });
-
-        Assert.That(actual, Is.EqualTo("-e One=1 -e Two=2"));
-    }
-}
-[TestFixture]
-public class GetArgumentFromProperty: ArgumentsBuilderExtensionTest
-{
-    [Test]
-    public void WhenPreCommand_DoesNotAppearInNormalCommands()
-    {
-        TestSettings input = new TestSettings { PreCommandValue = "preCommand" };
-        var actual = ArgumentsBuilderExtension.GetArgumentFromProperty(PreCommandValueProperty, input, preCommand: false, isSecret: false);
-
-        Assert.That(actual.Count(), Is.Zero);
-    }
-    [Test]
-    public void WhenPreCommand_ItAppearsInPreCommands()
-    {
-        TestSettings input = new TestSettings { PreCommandValue = "preCommand" };
-        var actual = ArgumentsBuilderExtension.GetArgumentFromProperty(PreCommandValueProperty, input, preCommand: true, isSecret: false);
-
-        Assert.That(actual.Count(), Is.EqualTo(1));
-    }
-}
-
-public class TestSettings: AutoToolSettings
-{
-    public string? String { get; set; }
-    public string[]? Strings { get; set; }
-    [AutoProperty(AutoArrayType = AutoArrayType.List)]
-    public string[]? ListStrings { get; set; }
-    public string? Password { get; set; }
-    public int? NullableInt { get; set; }
-    public Int64? NullableInt64 { get; set; }
-    public UInt64? NullableUInt64 { get; set; }
-    public UInt16? NullableUInt16 { get; set; }
-    public  bool? NullableBool { get; set; }
-    public TimeSpan? NullableTimeSpan { get; set; }
-    public bool Bool { get; set; }
-    [AutoProperty(Format = "-s {1}")]
-    public string? DecoratedString { get; set; }
-    [AutoProperty(Format = "-v", OnlyWhenTrue = true)]
-    public bool DecoratedBool { get; set; }
-    [AutoProperty(Format = "-e {1}")]
-    public string[]? DecoratedStrings { get; set; }
-    [AutoProperty(PreCommand = true)]
-    public string? PreCommandValue { get; set; }
-    protected override IEnumerable<string> CollectSecretProperties() => new[] { nameof(Password) };
 }
