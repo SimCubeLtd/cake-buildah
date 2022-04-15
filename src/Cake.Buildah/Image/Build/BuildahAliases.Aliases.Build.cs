@@ -39,21 +39,14 @@ public static partial class BuildahAliases
 
         // quote path if not already quoted
         string quotedPath;
-        if (!string.IsNullOrEmpty(path))
+        var trimmed = path.Trim();
+        if (trimmed.Length > 1 && trimmed.StartsWith("\"", StringComparison.OrdinalIgnoreCase) && trimmed.EndsWith("\"", StringComparison.OrdinalIgnoreCase))
         {
-            var trimmed = path.Trim();
-            if (trimmed.Length > 1 && trimmed.StartsWith("\"", StringComparison.OrdinalIgnoreCase) && trimmed.EndsWith("\"", StringComparison.OrdinalIgnoreCase))
-            {
-                quotedPath = path;
-            }
-            else
-            {
-                quotedPath = $"\"{path}\"";
-            }
+            quotedPath = path;
         }
         else
         {
-            quotedPath = path;
+            quotedPath = $"\"{path}\"";
         }
 
         runner.Run(
