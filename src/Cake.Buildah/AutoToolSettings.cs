@@ -15,13 +15,13 @@ public abstract class AutoToolSettings : ToolSettings
     /// Gets or sets values of these properties shouldn't be displayed in the output.
     /// </summary>
     // ReSharper disable once InconsistentNaming
-    public readonly HashSet<string> SecretProperties;
+    public string[] SecretProperties;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AutoToolSettings"/> class.
     /// </summary>
     [SuppressMessage("Usage", "CA2214:Do not call overridable methods in constructors", Justification = "We are allowing this.")]
-    protected AutoToolSettings() => SecretProperties = new(CollectSecretProperties());
+    protected AutoToolSettings() => SecretProperties = CollectSecretProperties().ToArray();
 
     /// <summary>
     /// Collects secret properties.
