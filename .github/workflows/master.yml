@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: SimCubeLtd/buildtool-action@prom3theu5-patch-1
+    - uses: SimCubeLtd/buildtool-action@main
       with:
         installRequired: 'true'
         checkout: 'true'
