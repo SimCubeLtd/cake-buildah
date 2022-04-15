@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using Cake.Core.Tooling;
 
 namespace Cake.Buildah;
@@ -14,18 +15,12 @@ public abstract class AutoToolSettings : ToolSettings
     /// <summary>
     /// Gets or sets values of these properties shouldn't be displayed in the output.
     /// </summary>
-    // ReSharper disable once InconsistentNaming
-    public string[] SecretProperties;
+    public ReadOnlyCollection<string>? SecretProperties { get; set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AutoToolSettings"/> class.
+    /// Sets the Collect of secret properties.
     /// </summary>
-    [SuppressMessage("Usage", "CA2214:Do not call overridable methods in constructors", Justification = "We are allowing this.")]
-    protected AutoToolSettings() => SecretProperties = CollectSecretProperties().ToArray();
-
-    /// <summary>
-    /// Collects secret properties.
-    /// </summary>
-    /// <returns>a Array of strings.</returns>
-    protected virtual IEnumerable<string> CollectSecretProperties() => Array.Empty<string>();
+    /// <param name="properties">The properties to pass through.</param>
+    public void SetSecretProperties(IEnumerable<string> properties) =>
+        SecretProperties = properties.ToList().AsReadOnly();
 }

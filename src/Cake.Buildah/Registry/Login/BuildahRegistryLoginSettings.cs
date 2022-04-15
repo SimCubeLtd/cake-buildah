@@ -24,13 +24,4 @@ public sealed partial class BuildahRegistryLoginSettings : AutoToolSettings
     /// Username.
     /// </summary>
     public string? Username { get; set; }
-
-    /// <summary>
-    /// Adds <see cref="Password"/> to secret properties.
-    /// </summary>
-    /// <returns>A collection of secret properties.</returns>
-    protected override IEnumerable<string> CollectSecretProperties() => new[]
-    {
-        nameof(Password),
-    };
 }

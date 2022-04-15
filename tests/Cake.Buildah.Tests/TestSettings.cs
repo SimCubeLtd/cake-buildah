@@ -36,10 +36,4 @@ public class TestSettings : AutoToolSettings
 
     [AutoProperty(PreCommand = true)]
     public string? PreCommandValue { get; set; }
-
-    protected override IEnumerable<string> CollectSecretProperties() =>
-        new[]
-        {
-            nameof(Password),
-        };
 }

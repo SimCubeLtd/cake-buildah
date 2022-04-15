@@ -40,13 +40,20 @@ public class BuildahLoginTest
     [Test]
     public void WhenOnlyPasswordIsSet_ArgumentIsRedacted()
     {
+        var settings = new BuildahRegistryLoginSettings
+        {
+            Password = "Tubo",
+        };
+
+        settings.SetSecretProperties(new List<string>()
+        {
+            nameof(settings.Password),
+        });
+
         var builder = new ProcessArgumentBuilder();
         builder.AppendAll(
             "login",
-            new BuildahRegistryLoginSettings
-            {
-                Password = "Tubo",
-            },
+            settings,
             Array.Empty<string>());
 
         var actual = builder.RenderSafe();

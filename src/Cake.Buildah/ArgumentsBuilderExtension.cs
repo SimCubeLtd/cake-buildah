@@ -188,7 +188,7 @@ public static class ArgumentsBuilderExtension
             return false;
         }
 
-        return settings.SecretProperties.Contains(property.Name);
+        return settings.SecretProperties?.Contains(property.Name) ?? false;
     }
 
     /// <summary>

@@ -59,6 +59,11 @@ public static partial class BuildahAliases
             throw new ArgumentNullException(nameof(settings));
         }
 
+        settings.SetSecretProperties(new List<string>
+        {
+            nameof(settings.Password),
+        });
+
         var runner = new GenericBuildahRunner<BuildahRegistryLoginSettings>(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
         runner.Run(
             "login",
