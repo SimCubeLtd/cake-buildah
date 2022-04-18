@@ -5,23 +5,23 @@
     <AssemblyName>Cake.Buildah</AssemblyName>
     <RootNamespace>Cake.Buildah</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.2</PackageVersion>
     <Copyright>2022 SimCube Ltd</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageId>Cake.Buildah</PackageId>
-    <Authors>David Sekula</Authors>
+    <Authors>David Sekula, SimCube Ltd</Authors>
     <Company>SimCube Ltd</Company>
     <Description>Cake Build addin for Buildah.</Description>
-    <PackageProjectUrl>https://github.com/SimCubeLtd/Cake.Buildah</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/SimCubeLtd/cake-buildah</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>cake;build;buildah;cake-build;cake-addin;cake-contrib</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PackageReleaseNotes>See https://github.com/SimCubeLtd/Cake.Buildah/blob/master/ReleaseNotes.md</PackageReleaseNotes>
-    <Version>0.0.1</Version>
+    <PackageReleaseNotes>See https://github.com/SimCubeLtd/cake-buildah/blob/master/ReleaseNotes.md</PackageReleaseNotes>
+    <Version>1.0.2</Version>
     <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/addin/cake-contrib-addin-medium.png</PackageIconUrl>
     <PackageIcon>icon.png</PackageIcon>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
