@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
+using System.Text;
 using Cake.Core;
 using Cake.Core.IO;
 
@@ -10,6 +11,7 @@ namespace Cake.Buildah;
 /// Arguments builder.
 /// </summary>
 [SuppressMessage("Globalization", "CA1304:Specify CultureInfo", Justification = "We want these lower.")]
+[SuppressMessage("Style", "IDE0010:Add missing cases", Justification = "Not needed.")]
 public static class ArgumentsBuilderExtension
 {
     /// <summary>
@@ -80,6 +82,7 @@ public static class ArgumentsBuilderExtension
 
                 if (!string.IsNullOrEmpty(value))
                 {
+                    // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
                     switch (quoting)
                     {
                         case BuildahArgumentQuoting.Unquoted:
@@ -88,7 +91,6 @@ public static class ArgumentsBuilderExtension
                         case BuildahArgumentQuoting.QuotedSecret:
                             builder.AppendQuotedSecret(value);
                             break;
-                        case BuildahArgumentQuoting.Quoted:
                         default:
                             builder.AppendQuoted(value);
                             break;
@@ -458,12 +460,12 @@ public static class ArgumentsBuilderExtension
     /// <example>NoForce -> no-force.</example>
     public static string? GetPropertyName(string name)
     {
-        string? result = null;
+        var stringBuilder = new StringBuilder();
         if (!string.IsNullOrEmpty(name))
         {
             if (name.Length > 0)
             {
-                result = name[..1].ToLower();
+                stringBuilder.Append(name[..1].ToLower());
             }
 
             if (name.Length > 1)
@@ -472,17 +474,17 @@ public static class ArgumentsBuilderExtension
                 {
                     if (char.IsUpper(c))
                     {
-                        result += "-" + char.ToLower(c);
+                        stringBuilder.Append(CultureInfo.InvariantCulture, $"-{char.ToLower(c)}");
                     }
                     else
                     {
-                        result += c;
+                        stringBuilder.Append(c);
                     }
                 }
             }
         }
 
-        return result;
+        return stringBuilder.ToString();
     }
 
     private static IEnumerable<BuildahArgument?> BuildahArguments<TSettings>(

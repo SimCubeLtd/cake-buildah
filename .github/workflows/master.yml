@@ -11,6 +11,9 @@ env:
   SIMCUBE_SOLUTION_ROOT: ${{ github.workspace }}
   SIMCUBE_MANUAL_VERSION: 0.0.${{ github.run_number }}.0
   SIMCUBE_MANUAL_BRANCH_NAME: ${{ github.ref_name }}
+  SIMCUBE_NUGET_SERVER: https://api.nuget.org/v3/index.json
+  SIMCUBE_NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+  SIMCUBE_YAML_CONFIG_ENABLED: "true"
   DOTNET_NOLOGO: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
