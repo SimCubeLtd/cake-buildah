@@ -30,10 +30,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Ps\**" />
     <EmbeddedResource Remove="Ps\**" />
     <None Remove="Ps\**" />
