@@ -9,7 +9,7 @@ namespace Cake.Buildah.Tests.Registry.Login;
 public class BuildahRegistryLoginFixture : ToolFixture<BuildahRegistryLoginSettings>, ICakeContext
 {
     public BuildahRegistryLoginFixture()
-        : base("Buildah") => ProcessRunner.Process.SetStandardOutput(new string[] { });
+        : base("buildah") => ProcessRunner.Process.SetStandardOutput(new string[] { });
 
     public string Path { get; set; } = null!;
 

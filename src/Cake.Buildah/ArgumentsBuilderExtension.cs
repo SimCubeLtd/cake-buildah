@@ -20,7 +20,11 @@ public static class ArgumentsBuilderExtension
     /// <param name="command">The command.</param>
     /// <param name="settings">The settings.</param>
     /// <param name="arguments">Extra Arguments.</param>
-    public static void AppendAll<TSettings>(this ProcessArgumentBuilder builder, string command, TSettings? settings, string[] arguments)
+    public static void AppendAll<TSettings>(
+        this ProcessArgumentBuilder builder,
+        string command,
+        TSettings? settings,
+        string[] arguments)
         where TSettings : AutoToolSettings, new()
     {
         if (builder == null)
@@ -63,7 +67,9 @@ public static class ArgumentsBuilderExtension
         foreach (var property in typeof(TSettings).GetProperties(BindingFlags.Public | BindingFlags.Instance))
         {
             var isSecret = IsPropertyValueSecret(property, settings);
-            var query = from a in GetArgumentFromProperty(property, settings, preCommand, isSecret) where a.HasValue select a.Value;
+            var query = from a in GetArgumentFromProperty(property, settings, preCommand, isSecret)
+                        where a.HasValue
+                        select a.Value;
 
             foreach (var (key, value, quoting) in query)
             {
@@ -101,7 +107,11 @@ public static class ArgumentsBuilderExtension
     /// <param name="preCommand">Pre or post command.</param>
     /// <param name="isSecret">declares if it is secret.</param>
     /// <returns>A collection of <see cref="BuildahArgument"/>.</returns>
-    public static IEnumerable<BuildahArgument?> GetArgumentFromProperty<TSettings>(PropertyInfo? property, TSettings settings, bool preCommand, bool isSecret)
+    public static IEnumerable<BuildahArgument?> GetArgumentFromProperty<TSettings>(
+        PropertyInfo? property,
+        TSettings settings,
+        bool preCommand,
+        bool isSecret)
         where TSettings : AutoToolSettings, new()
     {
         if (property is null)
@@ -120,55 +130,12 @@ public static class ArgumentsBuilderExtension
                     BuildahArgumentQuoting.Unquoted);
             }
         }
-        else if ((!preCommand && autoPropertyAttribute is not { PreCommand: true }) || (autoPropertyAttribute?.PreCommand != null && preCommand))
+        else if ((!preCommand && autoPropertyAttribute is not { PreCommand: true }) ||
+                 (autoPropertyAttribute?.PreCommand != null && preCommand))
         {
-            if (property?.PropertyType == typeof(bool))
+            foreach (var buildahArgument in BuildahArguments(property, settings, isSecret))
             {
-                yield return new BuildahArgument(null, GetArgumentFromBoolProperty(property, (bool)(property.GetValue(settings) ?? false)), BuildahArgumentQuoting.Unquoted);
-            }
-            else if (property?.PropertyType == typeof(bool?))
-            {
-                yield return new BuildahArgument(null, GetArgumentFromNullableBoolProperty(property, (bool?)property.GetValue(settings)), BuildahArgumentQuoting.Unquoted);
-            }
-            else if (property?.PropertyType == typeof(int?))
-            {
-                yield return new BuildahArgument(null, GetArgumentFromNullableIntProperty(property, (int?)property.GetValue(settings)), BuildahArgumentQuoting.Unquoted);
-            }
-            else if (property?.PropertyType == typeof(long?))
-            {
-                yield return new BuildahArgument(null, GetArgumentFromNullableInt64Property(property, (long?)property.GetValue(settings)), BuildahArgumentQuoting.Unquoted);
-            }
-            else if (property?.PropertyType == typeof(ulong?))
-            {
-                yield return new BuildahArgument(
-                    null,
-                    GetArgumentFromNullableUInt64Property(property, (ulong?)property.GetValue(settings)),
-                    BuildahArgumentQuoting.Unquoted);
-            }
-            else if (property?.PropertyType == typeof(ushort?))
-            {
-                yield return new BuildahArgument(
-                    null,
-                    GetArgumentFromNullableUInt16Property(property, (ushort?)property.GetValue(settings)),
-                    BuildahArgumentQuoting.Unquoted);
-            }
-            else if (property?.PropertyType == typeof(string))
-            {
-                yield return GetArgumentFromStringProperty(property, (string)property.GetValue(settings)!, isSecret);
-            }
-            else if (property?.PropertyType == typeof(TimeSpan?))
-            {
-                yield return new BuildahArgument(
-                    null,
-                    GetArgumentFromNullableTimeSpanProperty(property, (TimeSpan?)property.GetValue(settings)),
-                    BuildahArgumentQuoting.Unquoted);
-            }
-            else if (property?.PropertyType == typeof(string[]))
-            {
-                foreach (var arg in GetArgumentFromStringArrayProperty(property, (string[])property.GetValue(settings)!, isSecret))
-                {
-                    yield return arg;
-                }
+                yield return buildahArgument;
             }
         }
     }
@@ -180,7 +147,9 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="settings">The settings.</param>
     /// <returns>True if secret, false if not.</returns>
-    public static bool IsPropertyValueSecret<TSettings>(PropertyInfo? property, TSettings? settings)
+    public static bool IsPropertyValueSecret<TSettings>(
+        PropertyInfo? property,
+        TSettings? settings)
         where TSettings : AutoToolSettings
     {
         if (property is null || settings is null)
@@ -198,7 +167,10 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">the property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a string, or null.</returns>
-    public static string? GetArgumentFromAutoProperty(AutoPropertyAttribute? attribute, PropertyInfo? property, object? value)
+    public static string? GetArgumentFromAutoProperty(
+        AutoPropertyAttribute? attribute,
+        PropertyInfo? property,
+        object? value)
     {
         if (attribute?.Format is null)
         {
@@ -215,7 +187,11 @@ public static class ArgumentsBuilderExtension
             return null;
         }
 
-        var result = string.Format(CultureInfo.InvariantCulture, attribute.Format!, GetPropertyName(property.Name), value);
+        var result = string.Format(
+            CultureInfo.InvariantCulture,
+            attribute.Format!,
+            GetPropertyName(property.Name),
+            value);
         if (attribute.OnlyWhenTrue)
         {
             var boolValue = (bool)value;
@@ -225,7 +201,10 @@ public static class ArgumentsBuilderExtension
         if (property.PropertyType == typeof(string[]))
         {
             var strings = (string[])value;
-            result = string.Join(" ", strings.Select(s => string.Format(CultureInfo.InvariantCulture, attribute.Format, GetPropertyName(property.Name), s)));
+            result = string.Join(
+                " ",
+                strings.Select(s =>
+                    string.Format(CultureInfo.InvariantCulture, attribute.Format, GetPropertyName(property.Name), s)));
         }
 
         return result;
@@ -236,7 +215,8 @@ public static class ArgumentsBuilderExtension
     /// </summary>
     /// <param name="property">The property.</param>
     /// <returns>an instance of <see cref="AutoPropertyAttribute"/>.</returns>
-    public static AutoPropertyAttribute? GetAutoPropertyAttributeOrNull(PropertyInfo? property) => property?.GetCustomAttribute<AutoPropertyAttribute>();
+    public static AutoPropertyAttribute? GetAutoPropertyAttributeOrNull(PropertyInfo? property) =>
+        property?.GetCustomAttribute<AutoPropertyAttribute>();
 
     /// <summary>
     /// Get an argument from a bool property.
@@ -346,7 +326,10 @@ public static class ArgumentsBuilderExtension
     /// <param name="values">the values.</param>
     /// <param name="isSecret">is it secret?.</param>
     /// <returns>a nullable list of <see cref="BuildahArgument"/>.</returns>
-    public static IEnumerable<BuildahArgument?> GetArgumentFromDictionaryProperty(PropertyInfo? property, Dictionary<string, string>? values, bool isSecret)
+    public static IEnumerable<BuildahArgument?> GetArgumentFromDictionaryProperty(
+        PropertyInfo? property,
+        Dictionary<string, string>? values,
+        bool isSecret)
     {
         if (property is null)
         {
@@ -369,7 +352,10 @@ public static class ArgumentsBuilderExtension
     /// <param name="values">the values.</param>
     /// <param name="isSecret">is it secret?.</param>
     /// <returns>a nullable list of <see cref="BuildahArgument"/>.</returns>
-    public static IEnumerable<BuildahArgument?> GetArgumentFromStringArrayProperty(PropertyInfo? property, string?[]? values, bool isSecret)
+    public static IEnumerable<BuildahArgument?> GetArgumentFromStringArrayProperty(
+        PropertyInfo? property,
+        string?[]? values,
+        bool isSecret)
     {
         if (property is null)
         {
@@ -392,7 +378,10 @@ public static class ArgumentsBuilderExtension
     /// <param name="values">the values.</param>
     /// <param name="isSecret">is it secret?.</param>
     /// <returns>a nullable list of <see cref="BuildahArgument"/>.</returns>
-    public static BuildahArgument? GetArgumentFromStringArrayListProperty(PropertyInfo? property, string[]? values, bool isSecret)
+    public static BuildahArgument? GetArgumentFromStringArrayListProperty(
+        PropertyInfo? property,
+        string[]? values,
+        bool isSecret)
     {
         if (property is null)
         {
@@ -428,7 +417,10 @@ public static class ArgumentsBuilderExtension
 
         if (!string.IsNullOrEmpty(value))
         {
-            return new BuildahArgument($"--{GetPropertyName(property.Name)}", value, isSecret ? BuildahArgumentQuoting.QuotedSecret : BuildahArgumentQuoting.Quoted);
+            return new BuildahArgument(
+                $"--{GetPropertyName(property.Name)}",
+                value,
+                isSecret ? BuildahArgumentQuoting.QuotedSecret : BuildahArgumentQuoting.Quoted);
         }
 
         return null;
@@ -455,7 +447,8 @@ public static class ArgumentsBuilderExtension
     /// </summary>
     /// <param name="source">The source timespan.</param>
     /// <returns>a string representing the timespan.</returns>
-    public static string ConvertTimeSpan(TimeSpan source) => $"{Math.Floor(source.TotalHours)}h{source.Minutes}m{source.Seconds}s";
+    public static string ConvertTimeSpan(TimeSpan source) =>
+        $"{Math.Floor(source.TotalHours)}h{source.Minutes}m{source.Seconds}s";
 
     /// <summary>
     /// Converts property name to Buildah arguments format.
@@ -490,5 +483,76 @@ public static class ArgumentsBuilderExtension
         }
 
         return result;
+    }
+
+    private static IEnumerable<BuildahArgument?> BuildahArguments<TSettings>(
+        PropertyInfo? property,
+        TSettings settings,
+        bool isSecret)
+        where TSettings : AutoToolSettings, new()
+    {
+        if (property?.PropertyType == typeof(bool))
+        {
+            yield return new BuildahArgument(
+                null,
+                GetArgumentFromBoolProperty(property, (bool)(property.GetValue(settings) ?? false)),
+                BuildahArgumentQuoting.Unquoted);
+        }
+        else if (property?.PropertyType == typeof(bool?))
+        {
+            yield return new BuildahArgument(
+                null,
+                GetArgumentFromNullableBoolProperty(property, (bool?)property.GetValue(settings)),
+                BuildahArgumentQuoting.Unquoted);
+        }
+        else if (property?.PropertyType == typeof(int?))
+        {
+            yield return new BuildahArgument(
+                null,
+                GetArgumentFromNullableIntProperty(property, (int?)property.GetValue(settings)),
+                BuildahArgumentQuoting.Unquoted);
+        }
+        else if (property?.PropertyType == typeof(long?))
+        {
+            yield return new BuildahArgument(
+                null,
+                GetArgumentFromNullableInt64Property(property, (long?)property.GetValue(settings)),
+                BuildahArgumentQuoting.Unquoted);
+        }
+        else if (property?.PropertyType == typeof(ulong?))
+        {
+            yield return new BuildahArgument(
+                null,
+                GetArgumentFromNullableUInt64Property(property, (ulong?)property.GetValue(settings)),
+                BuildahArgumentQuoting.Unquoted);
+        }
+        else if (property?.PropertyType == typeof(ushort?))
+        {
+            yield return new BuildahArgument(
+                null,
+                GetArgumentFromNullableUInt16Property(property, (ushort?)property.GetValue(settings)),
+                BuildahArgumentQuoting.Unquoted);
+        }
+        else if (property?.PropertyType == typeof(string))
+        {
+            yield return GetArgumentFromStringProperty(property, (string)property.GetValue(settings)!, isSecret);
+        }
+        else if (property?.PropertyType == typeof(TimeSpan?))
+        {
+            yield return new BuildahArgument(
+                null,
+                GetArgumentFromNullableTimeSpanProperty(property, (TimeSpan?)property.GetValue(settings)),
+                BuildahArgumentQuoting.Unquoted);
+        }
+        else if (property?.PropertyType == typeof(string[]))
+        {
+            foreach (var arg in GetArgumentFromStringArrayProperty(
+                         property,
+                         (string[])property.GetValue(settings)!,
+                         isSecret))
+            {
+                yield return arg;
+            }
+        }
     }
 }

@@ -58,12 +58,6 @@ public readonly struct BuildahArgument : IEquatable<BuildahArgument>
     public override bool Equals(object? obj) => obj is BuildahArgument other && Equals(other);
 
     /// <summary>
-    /// Gets the has code.
-    /// </summary>
-    /// <returns>the hash code for the current instance.</returns>
-    public override int GetHashCode() => HashCode.Combine(Key, Value, (int)Quoting);
-
-    /// <summary>
     /// Compares this instance to another instance of <see cref="BuildahArgument"/>.
     /// </summary>
     /// <returns>true if match, false if not.</returns>
@@ -80,6 +74,12 @@ public readonly struct BuildahArgument : IEquatable<BuildahArgument>
 
         return Key == key && Value == value && Quoting == quoting;
     }
+
+    /// <summary>
+    /// Gets the has code.
+    /// </summary>
+    /// <returns>the hash code for the current instance.</returns>
+    public override int GetHashCode() => HashCode.Combine(Key, Value, (int)Quoting);
 
     /// <summary>
     /// Deconstruction Support.

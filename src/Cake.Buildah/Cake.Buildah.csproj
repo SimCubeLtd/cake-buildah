@@ -5,6 +5,8 @@
     <AssemblyName>Cake.Buildah</AssemblyName>
     <RootNamespace>Cake.Buildah</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Copyright>2022 SimCube Ltd</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>

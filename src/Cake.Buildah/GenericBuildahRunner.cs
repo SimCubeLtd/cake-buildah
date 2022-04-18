@@ -46,7 +46,7 @@ public class GenericBuildahRunner<TSettings> : BuildahTool<TSettings>
             throw new ArgumentNullException(nameof(additional));
         }
 
-        Run(settings, GenericBuildahRunner<TSettings>.GetArguments(command, settings, additional));
+        Run(settings, GetArguments(command, settings, additional));
     }
 
     /// <summary>

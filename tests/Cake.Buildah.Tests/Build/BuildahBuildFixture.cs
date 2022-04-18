@@ -9,7 +9,7 @@ namespace Cake.Buildah.Tests.Build;
 public class BuildahBuildFixture : ToolFixture<BuildahImageBuildSettings>, ICakeContext
 {
     public BuildahBuildFixture()
-        : base("Buildah") => ProcessRunner.Process.SetStandardOutput(new string[] { });
+        : base("buildah") => ProcessRunner.Process.SetStandardOutput(new string[] { });
 
     public string Path { get; set; } = null!;
 

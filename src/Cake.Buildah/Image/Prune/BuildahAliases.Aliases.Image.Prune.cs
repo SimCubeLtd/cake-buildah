@@ -36,6 +36,6 @@ public static partial class BuildahAliases
             context.Environment,
             context.ProcessRunner,
             context.Tools);
-        return runner.RunWithResult("image prune", settings ?? new BuildahImagePruneSettings(), r => r.ToArray());
+        return runner.RunWithResult("rm", settings ?? new BuildahImagePruneSettings(), r => r.ToArray());
     }
 }

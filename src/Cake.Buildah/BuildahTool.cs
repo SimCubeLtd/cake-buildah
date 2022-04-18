@@ -31,7 +31,7 @@ public abstract class BuildahTool<TSettings> : Tool<TSettings>
     /// Gets the name of the tool.
     /// </summary>
     /// <returns>The name of the tool.</returns>
-    protected override string GetToolName() => "Buildah";
+    protected override string GetToolName() => "buildah";
 
     /// <summary>
     /// Gets the possible names of the tool executable.
@@ -43,7 +43,7 @@ public abstract class BuildahTool<TSettings> : Tool<TSettings>
         {
             return new[]
             {
-                "Buildah",
+                "buildah",
             };
         }
 
