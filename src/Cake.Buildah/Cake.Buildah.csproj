@@ -28,12 +28,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Ps\**" />
-    <EmbeddedResource Remove="Ps\**" />
-    <None Remove="Ps\**" />
-  </ItemGroup>
-
-  <ItemGroup>
 	<PackageReference Include="Cake.Core" Version="2.1.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
