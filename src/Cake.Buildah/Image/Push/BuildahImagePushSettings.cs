@@ -18,4 +18,12 @@ public sealed class BuildahImagePushSettings : AutoToolSettings
     /// Gets or sets a value indicating whether push all tagged images in the repository.
     /// </summary>
     public bool AllTags { get; set; }
+
+    /// <summary>
+    /// Gets or sets --tls-verify.
+    /// default: false.
+    /// .
+    /// </summary>
+    [AutoProperty(Format = "--tls-verify={1}", PreCommand = false)]
+    public bool? TlsVerify { get; set; }
 }

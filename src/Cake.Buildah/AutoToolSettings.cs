@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Cake.Core.Tooling;
 
 namespace Cake.Buildah;
@@ -12,15 +11,4 @@ namespace Cake.Buildah;
 [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "I'm choosing to.")]
 public abstract class AutoToolSettings : ToolSettings
 {
-    /// <summary>
-    /// Gets or sets values of these properties shouldn't be displayed in the output.
-    /// </summary>
-    public ReadOnlyCollection<string>? SecretProperties { get; set; }
-
-    /// <summary>
-    /// Sets the Collect of secret properties.
-    /// </summary>
-    /// <param name="properties">The properties to pass through.</param>
-    public void SetSecretProperties(IEnumerable<string> properties) =>
-        SecretProperties = properties.ToList().AsReadOnly();
 }
