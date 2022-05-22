@@ -1,4 +1,5 @@
-﻿using Cake.Core.IO;
+﻿using Cake.Core;
+using Cake.Core.IO;
 using NUnit.Framework;
 
 namespace Cake.Buildah.Tests.Registry.Login;
@@ -34,30 +35,80 @@ public class BuildahLoginTest
 
         var actual = fixture.Run();
 
-        Assert.That(actual.Args, Is.EqualTo("login --username \"Tubo\" path"));
+        Assert.That(actual.Args, Is.EqualTo("login --username Tubo path"));
     }
 
     [Test]
-    public void WhenOnlyPasswordIsSet_ArgumentIsRedacted()
+    public void WhenUsernameAndTlsVerifyIsTrueIsSet_CommandLineIsCorrect()
     {
-        var settings = new BuildahRegistryLoginSettings
+        var fixture = new BuildahRegistryLoginFixture
         {
-            Password = "Tubo",
+            Settings = new BuildahRegistryLoginSettings
+            {
+                Username = "Tubo",
+                TlsVerify = true,
+            },
+            Path = "path",
         };
 
-        settings.SetSecretProperties(new List<string>()
+        var actual = fixture.Run();
+
+        Assert.That(actual.Args, Is.EqualTo("login --username Tubo --tls-verify=True path"));
+    }
+
+    [Test]
+    public void WhenUsernameAndPasswordIsSet_CommandLineIsCorrect()
+    {
+        var fixture = new BuildahRegistryLoginFixture
         {
-            nameof(settings.Password),
-        });
+            Settings = new BuildahRegistryLoginSettings
+            {
+                Username = "Tubo",
+                Password = "Password",
+            },
+            Path = "path",
+        };
 
-        var builder = new ProcessArgumentBuilder();
-        builder.AppendAll(
-            "login",
-            settings,
-            Array.Empty<string>());
+        var actual = fixture.Run();
 
-        var actual = builder.RenderSafe();
+        Assert.That(actual.Args, Is.EqualTo("login --username Tubo --password Password path"));
+    }
 
-        Assert.That(actual, Is.EqualTo("login --password \"[REDACTED]\""));
+    [Test]
+    public void WhenUsernameAndPasswordAndTlsVerifyIsSet_CommandLineIsCorrect()
+    {
+        var fixture = new BuildahRegistryLoginFixture
+        {
+            Settings = new BuildahRegistryLoginSettings
+            {
+                Username = "Tubo",
+                Password = "Password",
+                TlsVerify = true,
+            },
+            Path = "path",
+        };
+
+        var actual = fixture.Run();
+
+        Assert.That(actual.Args, Is.EqualTo("login --username Tubo --password Password --tls-verify=True path"));
+    }
+
+    [Test]
+    public void WhenUsernameAndPasswordAndTlsVerifyIsFalseIsSet_CommandLineIsCorrect()
+    {
+        var fixture = new BuildahRegistryLoginFixture
+        {
+            Settings = new BuildahRegistryLoginSettings
+            {
+                Username = "Tubo",
+                Password = "Password",
+                TlsVerify = false,
+            },
+            Path = "path",
+        };
+
+        var actual = fixture.Run();
+
+        Assert.That(actual.Args, Is.EqualTo("login --username Tubo --password Password --tls-verify=False path"));
     }
 }

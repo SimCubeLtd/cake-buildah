@@ -16,7 +16,6 @@ public class GetArgumentFromProperty : ArgumentsBuilderExtensionTest
             ArgumentsBuilderExtension.GetArgumentFromProperty(
                 PreCommandValueProperty,
                 input,
-                false,
                 false);
 
         Assert.That(actual.Count(), Is.Zero);
@@ -33,8 +32,7 @@ public class GetArgumentFromProperty : ArgumentsBuilderExtensionTest
             ArgumentsBuilderExtension.GetArgumentFromProperty(
                 PreCommandValueProperty,
                 input,
-                true,
-                false);
+                true);
 
         Assert.That(actual.Count(), Is.EqualTo(1));
     }

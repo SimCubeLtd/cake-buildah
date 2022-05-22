@@ -15,9 +15,10 @@ public static partial class BuildahAliases
     /// <param name="context">The context.</param>
     /// <param name="username">The username.</param>
     /// <param name="password">The password.</param>
+    /// <param name="tlsVerify">Perform tls verification. Set to false for Http Registry Servers.</param>
     /// <param name="server">The server.</param>
     [CakeMethodAlias]
-    public static void BuildahLogin(this ICakeContext context, string username, string password, string? server = null)
+    public static void BuildahLogin(this ICakeContext context, string username, string password, bool tlsVerify = false, string? server = null)
     {
         if (string.IsNullOrEmpty(username))
         {
@@ -35,6 +36,7 @@ public static partial class BuildahAliases
             {
                 Username = username,
                 Password = password,
+                TlsVerify = tlsVerify,
             },
             server);
     }
@@ -58,11 +60,6 @@ public static partial class BuildahAliases
         {
             throw new ArgumentNullException(nameof(settings));
         }
-
-        settings.SetSecretProperties(new List<string>
-        {
-            nameof(settings.Password),
-        });
 
         var runner = new GenericBuildahRunner<BuildahRegistryLoginSettings>(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
         runner.Run(

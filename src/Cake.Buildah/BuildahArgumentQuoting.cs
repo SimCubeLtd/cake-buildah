@@ -14,9 +14,4 @@ public enum BuildahArgumentQuoting
     /// Quotes.
     /// </summary>
     Quoted,
-
-    /// <summary>
-    /// A quoted secret.
-    /// </summary>
-    QuotedSecret,
 }

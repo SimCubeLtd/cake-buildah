@@ -65,7 +65,7 @@ public class ArgumentsBuilderExtensionTest
         public void WhenGivenStringProperty_FormatsProperly()
         {
             var actual =
-                ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo", false)!.Value;
+                ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo")!.Value;
 
             Assert.That(actual.Key, Is.EqualTo("--string"));
             Assert.That(actual.Value, Is.EqualTo("tubo"));
@@ -75,7 +75,7 @@ public class ArgumentsBuilderExtensionTest
         [Test]
         public void WhenGivenNull_NullIsReturned()
         {
-            var actual = ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, null, false);
+            var actual = ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, null);
 
             Assert.That(actual, Is.Null);
         }
@@ -88,11 +88,11 @@ public class ArgumentsBuilderExtensionTest
         public void WhenGivenStringProperty_FormatsProperly()
         {
             var actual =
-                ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo", true)!.Value;
+                ArgumentsBuilderExtension.GetArgumentFromStringProperty(StringProperty, "tubo")!.Value;
 
             Assert.That(actual.Key, Is.EqualTo("--string"));
             Assert.That(actual.Value, Is.EqualTo("tubo"));
-            Assert.That(actual.Quoting, Is.EqualTo(BuildahArgumentQuoting.QuotedSecret));
+            Assert.That(actual.Quoting, Is.EqualTo(BuildahArgumentQuoting.Quoted));
         }
     }
 
@@ -108,8 +108,7 @@ public class ArgumentsBuilderExtensionTest
                 {
                     "tubo1",
                     "tubo2",
-                },
-                false);
+                });
 
             CollectionAssert.AreEqual(
                 actual,
@@ -124,7 +123,7 @@ public class ArgumentsBuilderExtensionTest
         public void WhenGivenNull_EmptyArrayReturned()
         {
             var actual =
-                ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(StringsProperty, null, false);
+                ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(StringsProperty, null);
 
             Assert.That(actual, Is.Empty);
         }
@@ -142,8 +141,7 @@ public class ArgumentsBuilderExtensionTest
                 {
                     "tubo1",
                     "tubo2",
-                },
-                false)!.Value;
+                })!.Value;
 
             Assert.That(actual.Key, Is.EqualTo("--list-strings"));
             Assert.That(actual.Value, Is.EqualTo("tubo1,tubo2"));
@@ -156,8 +154,7 @@ public class ArgumentsBuilderExtensionTest
             var actual =
                 ArgumentsBuilderExtension.GetArgumentFromStringArrayProperty(
                     ListStringsProperty,
-                    null,
-                    false);
+                    null);
 
             Assert.That(actual, Is.Empty);
         }
@@ -175,8 +172,7 @@ public class ArgumentsBuilderExtensionTest
                 {
                     { "t1", "v1" },
                     { "t2", "v2" },
-                },
-                false);
+                });
 
             CollectionAssert.AreEqual(
                 actual,
@@ -191,7 +187,7 @@ public class ArgumentsBuilderExtensionTest
         public void WhenGivenNull_EmptyArrayReturned()
         {
             var actual =
-                ArgumentsBuilderExtension.GetArgumentFromDictionaryProperty(StringsProperty, null, false);
+                ArgumentsBuilderExtension.GetArgumentFromDictionaryProperty(StringsProperty, null);
 
             Assert.That(actual, Is.Empty);
         }
