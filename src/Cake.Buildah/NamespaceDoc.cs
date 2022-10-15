@@ -8,6 +8,6 @@ namespace Cake.Buildah;
 /// </summary>
 [CompilerGenerated]
 [SuppressMessage("Globalization", "CA1812", Justification = "We want this.")]
-internal class NamespaceDoc
+internal sealed class NamespaceDoc
 {
 }

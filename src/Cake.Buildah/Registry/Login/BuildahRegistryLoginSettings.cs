@@ -6,7 +6,6 @@ namespace Cake.Buildah;
 /// </summary>
 public sealed partial class BuildahRegistryLoginSettings : AutoToolSettings
 {
-
     /// <summary>
     /// Gets or sets --username, -u.
     /// Username.

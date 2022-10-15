@@ -11,13 +11,13 @@ namespace Cake.Buildah;
 public abstract class BuildahTool<TSettings> : Tool<TSettings>
     where TSettings : ToolSettings
 {
-    private readonly ICakeEnvironment environment;
+    private readonly ICakeEnvironment _environment;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BuildahTool{TSettings}"/> class.
     /// </summary>
     /// <param name="fileSystem">The file system.</param>
-    /// <param name="environment">The environment.</param>
+    /// <param name="environment">The _environment.</param>
     /// <param name="processRunner">The process runner.</param>
     /// <param name="tools">The tools.</param>
     protected BuildahTool(
@@ -25,7 +25,7 @@ public abstract class BuildahTool<TSettings> : Tool<TSettings>
         ICakeEnvironment environment,
         IProcessRunner processRunner,
         IToolLocator tools)
-        : base(fileSystem, environment, processRunner, tools) => this.environment = environment;
+        : base(fileSystem, environment, processRunner, tools) => _environment = environment;
 
     /// <summary>
     /// Gets the name of the tool.
@@ -39,7 +39,7 @@ public abstract class BuildahTool<TSettings> : Tool<TSettings>
     /// <returns>The tool executable name.</returns>
     protected override IEnumerable<string> GetToolExecutableNames()
     {
-        if (environment.Platform.IsUnix())
+        if (_environment.Platform.IsUnix())
         {
             return new[]
             {
