@@ -216,15 +216,8 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a nullable string.</returns>
-    public static string? GetArgumentFromNullableIntProperty(PropertyInfo? property, int? value)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        return value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
-    }
+    public static string? GetArgumentFromNullableIntProperty(PropertyInfo? property, int? value) =>
+        property is null ? null : value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
 
     /// <summary>
     /// Get Argument From NullableInt64Property.
@@ -232,15 +225,8 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a nullable string.</returns>
-    public static string? GetArgumentFromNullableInt64Property(PropertyInfo? property, long? value)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        return value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
-    }
+    public static string? GetArgumentFromNullableInt64Property(PropertyInfo? property, long? value) =>
+        property is null ? null : value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
 
     /// <summary>
     /// Get an argument from an unsigned long.
@@ -248,15 +234,8 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a nullable string.</returns>
-    public static string? GetArgumentFromNullableUInt64Property(PropertyInfo? property, ulong? value)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        return value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
-    }
+    public static string? GetArgumentFromNullableUInt64Property(PropertyInfo? property, ulong? value) =>
+        property is null ? null : value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
 
     /// <summary>
     /// Get an argument from an unsigned short.
@@ -264,15 +243,8 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a nullable string.</returns>
-    public static string? GetArgumentFromNullableUInt16Property(PropertyInfo? property, ushort? value)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        return value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
-    }
+    public static string? GetArgumentFromNullableUInt16Property(PropertyInfo? property, ushort? value) =>
+        property is null ? null : value.HasValue ? $"--{GetPropertyName(property.Name)} {value.Value}" : null;
 
     /// <summary>
     /// Get an argument from a nullable bool.
@@ -280,20 +252,8 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a nullable string.</returns>
-    public static string? GetArgumentFromNullableBoolProperty(PropertyInfo? property, bool? value)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        if (value ?? false)
-        {
-            return $"--{GetPropertyName(property.Name)}";
-        }
-
-        return null;
-    }
+    public static string? GetArgumentFromNullableBoolProperty(PropertyInfo? property, bool? value) =>
+        property is null ? null : value ?? false ? $"--{GetPropertyName(property.Name)}" : null;
 
     /// <summary>
     /// Get argument from dictionary.
@@ -351,25 +311,9 @@ public static class ArgumentsBuilderExtension
     /// <returns>a nullable list of <see cref="BuildahArgument"/>.</returns>
     public static BuildahArgument? GetArgumentFromStringArrayListProperty(
         PropertyInfo? property,
-        string[]? values)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        if (values is null)
-        {
-            return null;
-        }
-
-        if (values.Length > 0)
-        {
-            return GetArgumentFromStringProperty(property, string.Join(",", values));
-        }
-
-        return null;
-    }
+        string[]? values) =>
+        property is null ? null :
+        values?.Length > 0 ? GetArgumentFromStringProperty(property, string.Join(",", values)) : null;
 
     /// <summary>
     /// Get argument from string.
@@ -377,23 +321,15 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a nullable list of <see cref="BuildahArgument"/>.</returns>
-    public static BuildahArgument? GetArgumentFromStringProperty(PropertyInfo? property, string? value)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        if (!string.IsNullOrEmpty(value))
-        {
-            return new BuildahArgument(
-                $"--{GetPropertyName(property.Name)}",
-                value,
-                BuildahArgumentQuoting.Quoted);
-        }
-
-        return null;
-    }
+    public static BuildahArgument? GetArgumentFromStringProperty(PropertyInfo? property, string? value) =>
+        property is null
+            ? null
+            : !string.IsNullOrEmpty(value)
+                ? new BuildahArgument(
+                    $"--{GetPropertyName(property.Name)}",
+                    value,
+                    BuildahArgumentQuoting.Quoted)
+                : null;
 
     /// <summary>
     /// Get argument from nullable timespan.
@@ -401,15 +337,9 @@ public static class ArgumentsBuilderExtension
     /// <param name="property">The property.</param>
     /// <param name="value">the value.</param>
     /// <returns>a nullable .</returns>
-    public static string? GetArgumentFromNullableTimeSpanProperty(PropertyInfo? property, TimeSpan? value)
-    {
-        if (property is null)
-        {
-            return null;
-        }
-
-        return value.HasValue ? $"--{GetPropertyName(property.Name)} {ConvertTimeSpan(value.Value)}" : null;
-    }
+    public static string? GetArgumentFromNullableTimeSpanProperty(PropertyInfo? property, TimeSpan? value) =>
+        property is null ? null :
+        value.HasValue ? $"--{GetPropertyName(property.Name)} {ConvertTimeSpan(value.Value)}" : null;
 
     /// <summary>
     /// Convert timespan to string.
@@ -432,7 +362,7 @@ public static class ArgumentsBuilderExtension
         {
             if (name.Length > 0)
             {
-                stringBuilder.Append(name[..1].ToLower());
+                stringBuilder.Append(name[..1].ToLowerInvariant());
             }
 
             if (name.Length > 1)

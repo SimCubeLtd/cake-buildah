@@ -89,10 +89,7 @@ public class GenericBuildahRunner<TSettings> : BuildahTool<TSettings>
             settings,
             GetArguments(command, settings, arguments),
             processSettings,
-            proc =>
-            {
-                result = processOutput(proc.GetStandardOutput());
-            });
+            proc => result = processOutput(proc.GetStandardOutput()));
 
         return result;
     }
