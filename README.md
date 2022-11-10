@@ -12,4 +12,4 @@ Including addin in cake script is easy.
 ```
 **Cake references**
 
-* 0.0.1: Cake 2.1.0
+Cake 3.0.0

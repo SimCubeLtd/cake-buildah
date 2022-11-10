@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <AssemblyName>Cake.Buildah</AssemblyName>
     <RootNamespace>Cake.Buildah</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageVersion>1.0.3</PackageVersion>
+    <PackageVersion>3.0.0</PackageVersion>
     <Copyright>2022 SimCube Ltd</Copyright>
   </PropertyGroup>
 
@@ -21,14 +21,14 @@
     <IncludeSymbols>true</IncludeSymbols>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageReleaseNotes>See https://github.com/SimCubeLtd/cake-buildah/blob/master/ReleaseNotes.md</PackageReleaseNotes>
-    <Version>1.0.3</Version>
+    <Version>3.0.0</Version>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Cake.Core" Version="2.3.0" PrivateAssets="All" />
+	<PackageReference Include="Cake.Core" Version="3.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
