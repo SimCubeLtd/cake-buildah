@@ -1,8 +1,0 @@
-#--------------------------------------------------------
-# Packable Item Configuration
-#--------------------------------------------------------
-packableConfig:
-  pushPackages: true
-  packages:
-    - projectName: Cake.Buildah
-      includeSource: false
